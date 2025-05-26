@@ -1,33 +1,14 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium_config import get_driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 import json
 
-# User agent
-user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 
-# Selenium settings
-
-options = webdriver.ChromeOptions()
-options.add_argument('--headless')
-options.add_argument("--start-maximized")
-options.add_argument(f"user-agent={user_agent}")
-
-driver = webdriver.Chrome (service=Service(ChromeDriverManager().install()), options=options)
-
-
-driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-    "source": """
-        Object.defineProperty(navigator, 'webdriver', {
-            get: () => undefined
-        })
-    """
-})
-
+driver = get_driver()
 driver.get("https://jobs.ge/")
+
+time.sleep(3)
 
 # Scroll
 for _ in range(40):
