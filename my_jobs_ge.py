@@ -1,7 +1,5 @@
 from selenium_config import get_driver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
 import json
 
@@ -24,8 +22,6 @@ for page in range(1, int(last_page)+1):
 
     for i in range(len(containers)):
         try:
-            print(i)
-            
             container = containers[i]
             
             company = container.find_element(By.XPATH, './/div[@class="flex gap-2 pb-1"]/p').text
@@ -37,7 +33,6 @@ for page in range(1, int(last_page)+1):
             container.click()
             
             new_tab = [h for h in driver.window_handles if h != current_tab][0]
-            print(new_tab)
             driver.switch_to.window(new_tab)
             position_url = driver.current_url
             print("Clicked:", position_url)
