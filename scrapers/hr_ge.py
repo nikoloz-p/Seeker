@@ -1,5 +1,5 @@
 def run_hr_ge_script(log_callback=print) -> list[dict]:
-    from selenium_config import get_driver
+    from scrapers.selenium_config import get_driver
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
@@ -76,6 +76,3 @@ def run_hr_ge_script(log_callback=print) -> list[dict]:
     log_callback(f"Scraping done. Total: {len(data)} jobs.")
 
     return data
-
-
-run_hr_ge_script()

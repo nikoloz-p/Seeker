@@ -1,5 +1,5 @@
 def run_my_jobs_ge_script(log_callback=print) -> list[dict]:
-    from selenium_config import get_driver
+    from scrapers.selenium_config import get_driver
     from selenium.webdriver.common.by import By
     import time
 
@@ -54,4 +54,3 @@ def run_my_jobs_ge_script(log_callback=print) -> list[dict]:
     driver.quit()
     return data
 
-run_my_jobs_ge_script()

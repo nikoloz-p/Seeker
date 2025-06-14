@@ -6,3 +6,4 @@ jobs.db
 # jobs_ge.json
 # IDE configs
 .idea/
+.__pycache__/

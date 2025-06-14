@@ -1,0 +1,59 @@
+/*global*/
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+/*base styles*/
+
+/*header*/
+.header {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.header .logo img{
+    width: 150px;
+}
+
+.header_nav a{
+    color: #000000;
+}
+
+/*main*/
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.job_list_item {
+    margin: 35px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.job_list_item a{
+    color: #000;
+    font-weight: bold;
+}
+
+.job_list_item * {
+    display: block;
+    width: 400px;
+    text-align: center;
+}
+
+.job_list_item_position{
+    text-align: left;
+}

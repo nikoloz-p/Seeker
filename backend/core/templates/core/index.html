@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Jobs.ge Jobs {% endblock %}
+
+{% block content %}
+
+    <ul class="job_list">
+
+        {% for job in jobs %}
+            <li class="job_list_item">
+                <a href="{{ job.position_url }}" target="_blank" class="job_list_item_position">{{ job.position }}</a>
+                <a href="{{ job.company_url}}" target="_blank" class="job_list_item_company">{{ job.company }}</a>
+                <span class="published_date">
+                    {{job.published_date}}
+                </span>
+                <span class="end_date">
+                    {{job.end_date}}
+                </span>
+            </li>
+
+        {% empty %}
+            <li>No jobs found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
