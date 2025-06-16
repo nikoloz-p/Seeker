@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{%block title%} {% endblock %}</title>
+    <title>Seeker | {%block title%}  {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
@@ -14,13 +14,15 @@
     <header class="header">
         <h1 class="logo">
             <a href="{% url 'home' %}">
-                <img src="{% static 'images/logo_test.png' %}" alt="Logo">
+                <img src="{% static 'images/png1light.png' %}" alt="Logo">
             </a>
+
         </h1>
 
         <nav class="header_nav">
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
+            <ul class="nav_list">
+                <li class="nav_list_item"><a href="{% url 'home' %}">მთავარი გვერდი</a></li>
+                <li class="nav_list_item"><a href="{% url 'register' %}">რეგისტრაცია</a></li>
             </ul>
         </nav>
     </header>

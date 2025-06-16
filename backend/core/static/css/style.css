@@ -23,13 +23,23 @@ a {
     align-items: center;
 }
 
-.header .logo img{
+.header .logo img {
     width: 150px;
 }
 
-.header_nav a{
+.nav_list_item {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.nav_list_item:last-child {
+    margin-right: 0;
+}
+
+.nav_list_item a {
     color: #000000;
 }
+
 
 /*main*/
 main {

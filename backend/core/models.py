@@ -10,4 +10,4 @@ class Job(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'jobs_ge'
+        db_table = 'hr_ge'
