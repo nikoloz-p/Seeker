@@ -1,7 +1,7 @@
 # venv
-/venv
+#/venv
 # db
-jobs.db
+#jobs.db
 # json
 # jobs_ge.json
 # IDE configs
