@@ -1,4 +1,16 @@
 import sys
+import os
+import PyQt6
+
+# pathing to GUI
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# set pyqt6 plugins manually
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.join(
+    os.path.dirname(PyQt6.__file__), "Qt6", "plugins", "platforms"
+)
+
+
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QPushButton, QComboBox, QTextEdit, QStatusBar, QFileDialog
@@ -35,7 +47,7 @@ class ScraperThread(QThread):
                 raise StopScrapingException("Scraping stopped by user")
 
         try:
-            # wrap only the scraping call to catch, but still save result
+            
             try:
                 scraped = self.scraper_func(log_callback=log_callback)
             except StopScrapingException as e:
@@ -43,7 +55,7 @@ class ScraperThread(QThread):
             except Exception as e:
                 self.log.emit(f"Error: {e}")
         finally:
-            self.done.emit(scraped)  # ✅ always emit whatever was collected
+            self.done.emit(scraped)  
 
 
 class ScraperGUI(QWidget):
