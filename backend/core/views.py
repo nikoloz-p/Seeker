@@ -30,8 +30,7 @@ def register(request):
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
             user.email = form.cleaned_data['email']
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
+            user.name = form.cleaned_data['name']
             user.set_password(form.cleaned_data['password1'])
             user.is_active = False
             user.save()

@@ -11,25 +11,29 @@
 
 </head>
 <body>
+    <!-- header -->
     <header class="header">
-        <h1 class="logo">
-            <a href="{% url 'home' %}">
-                <img src="{% static 'images/png1light.png' %}" alt="Logo">
+        <div class="header_inner">
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo">
             </a>
-
-        </h1>
-
-        <nav class="header_nav">
-            <ul class="nav_list">
-                <li class="nav_list_item"><a href="{% url 'home' %}">მთავარი გვერდი</a></li>
-                <li class="nav_list_item"><a href="{% url 'register' %}">რეგისტრაცია</a></li>
-            </ul>
-        </nav>
+            <nav class="header_nav">
+                <ul class="nav_list">
+                    <li class="nav_list_item"><a href="{% url 'home' %}">მთავარი გვერდი</a></li>
+                    <li class="nav_list_item"><a href="{% url 'register' %}">ჩვენს შესახებ</a></li>
+                    <li class="nav_list_item"><a href="{% url 'register' %}">კონტაქტი</a></li>
+                    <li class="nav_list_item"><a href="{% url 'register' %}">რეგისტრაცია</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+    <!-- content -->
     <main class="main">
-        {% block content %}
+        <div class="main_inner">
+            {% block content %}
 
-        {% endblock %}
+            {% endblock %}
+        </div>
     </main>
     <footer>
         <p>&copy; 2023 Job Board. All rights reserved</p>

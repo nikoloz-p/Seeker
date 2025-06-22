@@ -1,49 +1,65 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block title %}Register{% endblock %}
 {% block content %}
 
-<form method="post" class="auth-form">
-  {% csrf_token %}
+<div class="auth">
+  <div class="auth_content">
 
-  <div class="form-group">
-    {{ form.first_name.label_tag }}
-    {{ form.first_name }}
+    <h1 class="auth_content-title">
+      ყველა განცხადება ერთ სივრცეში
+    </h1>
+
+    <p class="auth_content-subtext">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+      Saepe neque accusantium voluptatibus aliquid facere voluptate temporibus explicabo eligendi! 
+      Vitae minus pariatur omnis ipsa laboriosam facilis ratione illo eum nemo mollitia?
+    </p>
+
   </div>
 
-  <div class="form-group">
-    {{ form.last_name.label_tag }}
-    {{ form.last_name }}
+  <div class="auth_form">
+    <h2 class="auth_form-title">
+      რეგისტრაცია
+    </h2>
+    <form method="post" class="form">
+      {% csrf_token %}
+
+      <div class="auth_form-group">
+
+        {{ form.name }}
+      </div>
+
+      <div class="auth_form-group">
+
+        {{ form.email }}
+        {% for error in form.email.errors %}
+          <div class="error">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="auth_form-group">
+
+        {{ form.password1 }}
+        {% if form.password1.help_text %}
+          <small>{{ form.password1.help_text }}</small>
+        {% endif %}
+        {% for error in form.password1.errors %}
+          <div class="error">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="auth_form-group">
+
+        {{ form.password2 }}
+        {% for error in form.password2.errors %}
+          <div class="error">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <button type="submit" class="auth_form-button">რეგისტრაცია</button>
+
+    </form>
   </div>
-
-  <div class="form-group">
-    {{ form.email.label_tag }}
-    {{ form.email }}
-    {% for error in form.email.errors %}
-      <div class="error">{{ error }}</div>
-    {% endfor %}
-  </div>
-
-    <div class="form-group">
-      {{ form.password1.label_tag }}
-      {{ form.password1 }}
-      {% if form.password1.help_text %}
-        <small>{{ form.password1.help_text }}</small>
-      {% endif %}
-      {% for error in form.password1.errors %}
-        <div class="error">{{ error }}</div>
-      {% endfor %}
-  </div>
-
-  <div class="form-group">
-    {{ form.password2.label_tag }}
-    {{ form.password2 }}
-    {% for error in form.password2.errors %}
-      <div class="error">{{ error }}</div>
-    {% endfor %}
-  </div>
-
-  <button type="submit">რეგისტრაცია</button>
-
-
-</form>
+</div>
 {% endblock %}
