@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Job
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -8,45 +7,68 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from .forms import CustomUserCreationForm
+from django.contrib.auth import logout
+from .forms import CustomUserCreationForm, CustomLoginForm
+from .models import Job
+from django.forms.utils import ErrorList
 
-# jobs views
+User = get_user_model()
+
 def job_list(request):
     jobs = Job.objects.order_by('id')[:50]
-    return render(request, 'core/index.html', {'jobs': jobs})
+
+    if not request.user.is_authenticated:
+        return redirect('authorization')
+    else:
+        return render(request, 'core/index.html', {'jobs': jobs})
 
 def job_detail(request, job_id):
     job = Job.objects.get(pk=job_id)
     return render(request, 'core/job_detail.html', {'job': job})
 
+def auth_view(request):
+    if request.method == 'GET':
+        form_type = request.GET.get('form_type', 'login')
+        register_form = CustomUserCreationForm()
+        login_form = CustomLoginForm()
+        return render(request, 'core/register.html', {
+            'register_form': register_form,
+            'login_form': login_form,
+            'form_type': form_type,
+        })
 
-# registration views
-User = get_user_model()
+    form_type = request.POST.get('form_type', 'register')
 
-def register(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = form.cleaned_data['email']
-            user.email = form.cleaned_data['email']
-            user.name = form.cleaned_data['name']
-            user.set_password(form.cleaned_data['password1'])
+    register_form = CustomUserCreationForm()
+    login_form = CustomLoginForm(request, data=request.POST)
+
+    if form_type == "register":
+        register_form = CustomUserCreationForm(request.POST)
+        if register_form.is_valid():
+            user = register_form.save(commit=False)
+            user.username = register_form.cleaned_data['email']
+            user.email = register_form.cleaned_data['email']
+            user.first_name = register_form.cleaned_data['name']
+            user.set_password(register_form.cleaned_data['password1'])
             user.is_active = False
             user.save()
-
             send_verification_email(request, user)
             return render(request, 'core/registration/verify_email_sent.html')
 
-        else:
-            print("Form is not valid:")
-            print(form.errors)
-    else:
-        form = CustomUserCreationForm()
 
-    return render(request, 'core/register.html', {'form': form})
+    elif form_type == 'login':  # login
+        login_form = CustomLoginForm(request, data=request.POST)
+        if login_form.is_valid():
+            user = login_form.get_user()
+            login(request, user)
+            return redirect('home')  # or wherever you want
 
-# account activation views
+    return render(request, 'core/register.html', {
+        "register_form": register_form,
+        "login_form": login_form,
+        "form_type": form_type,
+    })
+
 def send_verification_email(request, user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
@@ -80,3 +102,15 @@ def activate_account(request, uidb64, token):
         return render(request, 'core/registration/verify_success.html')
     else:
         return render(request, 'core/registration/verify_failed.html')
+
+def account_view(request):
+    if not request.user.is_authenticated:
+        return redirect('authorization')
+
+    user = request.user
+    return render(request, 'core/account.html', {'user': user})
+
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+    return redirect('authorization')

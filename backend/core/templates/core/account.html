@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+
+{% block title %}პროფილი{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">გამოსვლა</button>
+    </form>
+{% endblock%}

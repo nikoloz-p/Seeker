@@ -30,6 +30,7 @@
 
 body {
     font-family: 'Contractica-Book';
+    margin: 0;
 }
 
 /*global*/
@@ -102,13 +103,6 @@ h1, h2, h3, h4 {
 
 
 /*main*/
-.main {
-    background-image: url('../images/2saturated.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 700px;
-    width: 100%;
-}
 
 .main_inner {
     max-width: 1330px;
@@ -139,6 +133,14 @@ h1, h2, h3, h4 {
 
 /* authorization */
 
+.auth-main {
+    background-image: url('../images/2saturated.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: calc(100vh - 147px);
+}
+
 .auth {
     display: flex;
     justify-content: space-between;
@@ -167,7 +169,6 @@ h1, h2, h3, h4 {
     font-family: 'Contractica';
     font-size: 25px;
     margin-bottom: 20px;
-    text-align: left;
 }
 
 .auth_form-group {
@@ -214,10 +215,37 @@ h1, h2, h3, h4 {
     font-family: 'Contractica-CAPS';
     padding: 20px;
     font-size: 20px;
-    margin-top: 20px;
     cursor: pointer;
+    margin: 15px auto;
+    line-height: 10px;
 }
 
+.auth_form-button--link {
+    background: none;
+    border: none;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-family: 'Contractica-CAPS';
+    cursor: pointer;
+    border-bottom: solid 1px #a3a3a3;
+    padding: 0;
+}
+
+.auth_form-button--link:hover {
+    transition: all 0.3s ease;
+    color: #116669;
+    border-color: #116669;
+}
+
+.error {
+    text-align: left;
+    font-weight: bold;
+    color: #116669;
+}
+
+.auth_form-switch {
+    text-align: right;
+}
 
 /* footer */
 

@@ -10,33 +10,37 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
-<body>
+<body {% block body_class %}{% endblock %} >
     <!-- header -->
     <header class="header">
         <div class="header_inner">
-            <a href="{% url 'home' %}" class="logo">
+            <a href="{% url 'authorization' %}" class="logo">
                 <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo">
             </a>
             <nav class="header_nav">
                 <ul class="nav_list">
-                    <li class="nav_list_item"><a href="{% url 'home' %}">მთავარი გვერდი</a></li>
-                    <li class="nav_list_item"><a href="{% url 'register' %}">ჩვენს შესახებ</a></li>
-                    <li class="nav_list_item"><a href="{% url 'register' %}">კონტაქტი</a></li>
-                    <li class="nav_list_item"><a href="{% url 'register' %}">რეგისტრაცია</a></li>
+                    <li class="nav_list_item"><a href="{% url 'authorization' %}">მთავარი გვერდი</a></li>
+                    <li class="nav_list_item"><a href="{% url 'authorization' %}">ჩვენს შესახებ</a></li>
+                    <li class="nav_list_item"><a href="{% url 'authorization' %}">კონტაქტი</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav_list_item"><a href="{% url 'account' %}">პროფილი</a></li>
+                    {% else %}
+                        <li class="nav_list_item"><a href="{% url 'authorization' %}">ავტორიზაცია</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
     </header>
     <!-- content -->
-    <main class="main">
+    <main class="main {% block main_class %}{% endblock %}">
         <div class="main_inner">
             {% block content %}
 
             {% endblock %}
         </div>
     </main>
-    <footer>
-        <p>&copy; 2023 Job Board. All rights reserved</p>
-    </footer>
+<!--    <footer>-->
+<!--        <p>&copy; 2023 Job Board. All rights reserved</p>-->
+<!--    </footer>-->
 </body>
 </html>

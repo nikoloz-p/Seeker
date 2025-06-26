@@ -100,6 +100,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTH_USER_MODEL = 'core.CustomUser'
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -126,10 +128,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'register.seeker@gmail.com'
-EMAIL_HOST_PASSWORD = 'ifdtzmzhuyefdjrg'
-DEFAULT_FROM_EMAIL = 'register.seeker@gmail.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.mailersend.net'
+# EMAIL_PORT = 2525
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'MS_hW8kGl@test-zxk54v867pxljy6v.mlsender.net'
+# EMAIL_HOST_PASSWORD = 'mssp.DuJKsk1.pr9084znrje4w63d.CA0PFwv'
+# DEFAULT_FROM_EMAIL = 'MS_05n9A5@test-zzk54v867pxljy6v.mlsender.net'

@@ -1,64 +1,90 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}Register{% endblock %}
-{% block content %}
+{% block body_class %}class="auth-page"{% endblock %}
+{% block title %}Auth{% endblock %}
+{% block main_class %}auth-main{% endblock %}
 
+{% block content %}
 <div class="auth">
   <div class="auth_content">
-
-    <h1 class="auth_content-title">
-      ყველა განცხადება ერთ სივრცეში
-    </h1>
-
-    <p class="auth_content-subtext">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-      Saepe neque accusantium voluptatibus aliquid facere voluptate temporibus explicabo eligendi! 
-      Vitae minus pariatur omnis ipsa laboriosam facilis ratione illo eum nemo mollitia?
-    </p>
-
+    <h1 class="auth_content-title">ყველა განცხადება ერთ სივრცეში</h1>
+    <p class="auth_content-subtext">შესვლა ან რეგისტრაცია ერთ გვერდზე.</p>
   </div>
 
   <div class="auth_form">
     <h2 class="auth_form-title">
-      რეგისტრაცია
+      {% if form_type == "register" %}რეგისტრაცია{% else %}შესვლა{% endif %}
     </h2>
-    <form method="post" class="form">
+
+    <form method="post" class="form" id="auth-form">
       {% csrf_token %}
 
-      <div class="auth_form-group">
+      <input type="hidden" name="form_type" id="form_type" value="{{ form_type }}">
 
-        {{ form.name }}
-      </div>
+      {% if form_type == "register" %}
+        <div class="auth_form-group">
+          {{ register_form.name }}
+          {% for error in register_form.name.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        </div>
 
-      <div class="auth_form-group">
+        <div class="auth_form-group">
+          {{ register_form.email }}
+          {% for error in register_form.email.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        </div>
 
-        {{ form.email }}
-        {% for error in form.email.errors %}
-          <div class="error">{{ error }}</div>
-        {% endfor %}
-      </div>
+        <div class="auth_form-group">
+          {{ register_form.password1 }}
+          {% for error in register_form.password1.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        </div>
 
-      <div class="auth_form-group">
+        <div class="auth_form-group">
+          {{ register_form.password2 }}
+          {% for error in register_form.password2.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        </div>
 
-        {{ form.password1 }}
-        {% if form.password1.help_text %}
-          <small>{{ form.password1.help_text }}</small>
+      {% else %}
+        <div class="auth_form-group">
+          {{ login_form.username }}
+          {% for error in login_form.username.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="auth_form-group">
+          {{ login_form.password }}
+          {% for error in login_form.password.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        {% if login_form.non_field_errors %}
+          <div class="error">
+            {% for error in login_form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
         {% endif %}
-        {% for error in form.password1.errors %}
-          <div class="error">{{ error }}</div>
-        {% endfor %}
-      </div>
+      {% endif %}
 
-      <div class="auth_form-group">
+      <button type="submit" class="auth_form-button">
+        {% if form_type == "register" %}რეგისტრაცია{% else %}შესვლა{% endif %}
+      </button>
+    </form>
 
-        {{ form.password2 }}
-        {% for error in form.password2.errors %}
-          <div class="error">{{ error }}</div>
-        {% endfor %}
-      </div>
-
-      <button type="submit" class="auth_form-button">რეგისტრაცია</button>
-
+    <form method="get" class="auth_form-switch">
+      <input type="hidden" name="form_type" value="{% if form_type == 'register' %}login{% else %}register{% endif %}">
+      <p>{% if form_type == 'register' %}უკვე გაქვს ანგარიში?{% else %}არ გაქვს ანგარიში?{% endif %}</p>
+      <button class="auth_form-button--link" type="submit">
+        {% if form_type == "register" %}შესვლა{% else %}რეგისტრაცია{% endif %}
+      </button>
     </form>
   </div>
 </div>
