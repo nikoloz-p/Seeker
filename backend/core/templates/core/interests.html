@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Seeker | ინტერესები</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="header--interests">
+        <a href="#" class="logo--interests">
+            <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo">
+        </a>
+    </header>
+    <main class="content--interests">
+        <div class="content--interests_inner">
+            <h1 class="content--interests_title">ანგარიში აქტიურია, <span class="bold-green">{{ test_name }}</span>!</h1>
+            <h3 class="content--interests_subtitle">
+                იმისთვის, რომ უკეთ შევუსაბამოთ ვაკანსიები თქვენს ინტერესებს და გაგიადვილოთ სამსახურის პოვნა,
+                გთხოვთ აირჩიოთ <span class="bold-green">3 საინტერესო სფერო</span>
+            </h3>
+            <section class="content--interests_fields">
+                {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="interests-grid">
+                        {% for interest in interests %}
+                            <label class="interest-option">
+                                <input type="checkbox" name="interests" value="{{ interest.id }}">
+                                {{ interest.name }}
+                            </label>
+                        {% endfor %}
+                  </div>
+                  <button type="submit">Save Interests</button>
+                </form>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

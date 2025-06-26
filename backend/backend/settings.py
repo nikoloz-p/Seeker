@@ -128,6 +128,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+#
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.mailersend.net'
 # EMAIL_PORT = 2525

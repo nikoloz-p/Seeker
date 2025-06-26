@@ -55,9 +55,12 @@ h1, h2, h3, h4 {
     padding: 0
 }
 
-
-
 /*base styles*/
+
+.bold-green {
+    color: #116669;
+    font-family: Contractica-CAPS;
+}
 
 /*header*/
 
@@ -247,6 +250,45 @@ h1, h2, h3, h4 {
     text-align: right;
 }
 
+/*interests*/
+
+/*header*/
+
+.header--interests{
+    margin-top: 50px;
+}
+
+.logo--interests {
+    text-align: center;
+    display: block;
+}
+
+.logo--interests img{
+    max-width: 350px;
+}
+
+/*content*/
+
+.content--interests {
+    margin-top: 70px;
+    text-align: center;
+}
+
+.content--interests_inner {
+    max-width: 900px;
+    margin: 20px auto 0;
+}
+
+.content--interests_title {
+    font-family: Contractica-CAPS;
+}
+
+.content--interests_subtitle {
+    margin-top: 45px;
+    line-height: 35px;
+}
+
+
 /* footer */
 
 footer {
@@ -258,3 +300,4 @@ a:hover {
     transition: all 0.3s ease;
     color: #116669;
 }
+

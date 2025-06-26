@@ -9,7 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from django.contrib.auth import logout
 from .forms import CustomUserCreationForm, CustomLoginForm
-from .models import Job
+from .models import Job, Interest
 from django.forms.utils import ErrorList
 
 User = get_user_model()
@@ -99,7 +99,7 @@ def activate_account(request, uidb64, token):
     if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'core/registration/verify_success.html')
+        return render(request, 'core/interests.html')
     else:
         return render(request, 'core/registration/verify_failed.html')
 
@@ -114,3 +114,25 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
     return redirect('authorization')
+
+
+def interests_view(request):
+    # if not request.user.is_authenticated:
+    #     return redirect('authorization')
+
+    if request.method == 'POST':
+        selected = request.POST.getlist('interests')
+        if len(selected) == 3:
+            request.user.interests.set(selected)
+            return redirect('home')
+        else:
+            error = "Please select exactly 3 interests."
+    else:
+        error = None
+
+    interests = Interest.objects.all()
+    return render(request, 'core/interests.html', {
+        'test_name': 'ნიკოლოზ',
+        'interests': interests,
+        'error': error
+    })

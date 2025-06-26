@@ -39,6 +39,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name']
 
     objects = CustomUserManager()
+    interests = models.ManyToManyField('Interest', blank=True)
 
     def __str__(self):
         return self.email
+
+class Interest(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
