@@ -1,0 +1,296 @@
+
+/* fonts */
+@font-face {
+    font-family: 'Contractica-Black';
+    src: url('../fonts/contractica/TBCContractica-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Contractica-Book';
+    src: url('../fonts/contractica/TBCContractica-Book.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Contractica';
+    src: url('../fonts/contractica/TBCContractica-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Contractica';
+    src: url('../fonts/contractica/TBCContractica-Light.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Contractica-CAPS';
+    src: url('../fonts/contractica/TBCContracticaCAPS-Bold.ttf') format('truetype');
+    font-weight: 400;
+}
+
+body {
+    font-family: 'Contractica-Book';
+    margin: 0;
+}
+
+/*global*/
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0
+}
+
+/*base styles*/
+
+.bold-green {
+    color: #116669;
+    font-family: Contractica-CAPS;
+}
+
+/*header*/
+
+.header {
+    margin: 15px 0 30px;
+}
+
+.header_inner {
+    max-width: 1330px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Contractica-Book';
+    font-weight: 700;
+    padding: 30px 65px;
+    background-color: #fff;
+    border-radius: 40px;
+}
+
+.header .logo {
+    display: block;
+}
+
+.header .logo img {
+    width: 150px;
+    transform: translateY(7px);
+}
+
+.nav_list_item {
+    display: inline-block;
+    margin: 0 50px;
+    font-size: 18px;
+}
+
+.nav_list_item:last-child {
+    margin-right: 0;
+}
+
+.nav_list_item a {
+    color: #000000;
+}
+
+
+/*main*/
+
+.main_inner {
+    max-width: 1330px;
+    margin: 0 auto;
+
+}
+
+.job_list_item {
+    margin: 35px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.job_list_item a{
+    color: #000;
+    font-weight: bold;
+}
+
+.job_list_item * {
+    display: block;
+    width: 400px;
+    text-align: center;
+}
+
+.job_list_item_position{
+    text-align: left;
+}
+
+/* authorization */
+
+.auth-main {
+    background-image: url('../images/2saturated.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: calc(100vh - 147px);
+}
+
+.auth {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 85px;
+}
+
+.auth_content {
+    max-width: 600px;
+    color: #fff;
+}
+
+.auth_content-title {
+    font-family: 'Contractica-CAPS';
+    font-size: 68px;
+}
+
+.auth_form {
+    background: #fff;
+    padding: 35px 50px;
+    margin-bottom: 25px;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.auth_form-title {
+    font-family: 'Contractica';
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.auth_form-group {
+    width: 100%;
+}
+
+.auth_form-input {
+    display: block;
+    position: relative;
+    width: 500px;
+    height: 60px;
+    margin: 10px 0;
+    border-radius: 50px;
+    padding: 5px 15px;
+    background-color: #FAFAFA;
+    border: 2px solid #DDDDDD;
+    box-shadow: none;
+    outline: none;
+    font-family: 'Contractica-Book';
+    text-indent: 10px;
+    font-size: 16px;
+}
+
+.auth_form-input:focus {
+    transition: all 0.6s ease;
+    border-color: #116669;
+}
+
+.auth_form-input::placeholder {
+    text-indent: 10px;
+}
+
+
+
+.auth_form-icon {
+    width: 50px;
+    height: 35px;
+    display: block;
+}
+
+.auth_form-btn {
+    margin-top: 15px;
+}
+
+.auth_form-btn--link {
+    background: none;
+    border: none;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-family: 'Contractica-CAPS';
+    cursor: pointer;
+    border-bottom: solid 1px #a3a3a3;
+    padding: 0;
+}
+
+.auth_form-btn--link:hover {
+    transition: all 0.3s ease;
+    color: #116669;
+    border-color: #116669;
+}
+
+.error {
+    text-align: left;
+    font-weight: bold;
+    color: #116669;
+}
+
+.auth_form-switch {
+    text-align: right;
+}
+
+/*interests*/
+
+/*header*/
+
+.header--interests{
+    margin-top: 50px;
+}
+
+.logo--interests {
+    text-align: center;
+    display: block;
+}
+
+.logo--interests img{
+    max-width: 350px;
+}
+
+/*content*/
+
+.content--interests {
+    margin-top: 70px;
+    text-align: center;
+}
+
+.content--interests_inner {
+    max-width: 900px;
+    margin: 20px auto 0;
+}
+
+.content--interests_title {
+    font-family: Contractica-CAPS;
+}
+
+.content--interests_subtitle {
+    margin-top: 45px;
+    line-height: 35px;
+}
+
+
+/* footer */
+
+footer {
+    margin-top: 20px;
+    text-align: right;
+}
+
+a:hover {
+    transition: all 0.3s ease;
+    color: #116669;
+}
+

@@ -8,6 +8,10 @@
 
         {% for job in jobs %}
             <li class="job_list_item">
+                <a href="{{job.source_site}}">
+                    <img src="{{job.source_icon}}">
+                    {{ job.source_site }}
+                </a>
                 <a href="{{ job.position_url }}" target="_blank" class="job_list_item_position">{{ job.position }}</a>
                 <a href="{{ job.company_url}}" target="_blank" class="job_list_item_company">{{ job.company }}</a>
                 <span class="published_date">

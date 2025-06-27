@@ -3,6 +3,9 @@
 {% block title %}პროფილი{% endblock %}
 
 {% block content %}
+    <p>hello, {{user}}</p>
+    <p>თქვენი ელ-ფოსტა: {{user.email}}</p>
+    <p>დაინტერესებული სფეროები: {{interests}}</p>
     <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit">გამოსვლა</button>

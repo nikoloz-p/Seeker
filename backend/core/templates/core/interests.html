@@ -9,37 +9,77 @@
     <title>Seeker | ინტერესები</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <header class="header--interests">
-        <a href="#" class="logo--interests">
-            <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo">
-        </a>
-    </header>
-    <main class="content--interests">
-        <div class="content--interests_inner">
-            <h1 class="content--interests_title">ანგარიში აქტიურია, <span class="bold-green">{{ test_name }}</span>!</h1>
-            <h3 class="content--interests_subtitle">
-                იმისთვის, რომ უკეთ შევუსაბამოთ ვაკანსიები თქვენს ინტერესებს და გაგიადვილოთ სამსახურის პოვნა,
-                გთხოვთ აირჩიოთ <span class="bold-green">3 საინტერესო სფერო</span>
-            </h3>
-            <section class="content--interests_fields">
-                {% if error %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endif %}
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="interests-grid">
-                        {% for interest in interests %}
-                            <label class="interest-option">
-                                <input type="checkbox" name="interests" value="{{ interest.id }}">
-                                {{ interest.name }}
-                            </label>
-                        {% endfor %}
-                  </div>
-                  <button type="submit">Save Interests</button>
-                </form>
-            </section>
-        </div>
-    </main>
+<body class="body--interests">
+    <div class="body--interests_inner">
+        <header class="header--interests">
+            <a href="#" class="logo--interests">
+                <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo">
+            </a>
+        </header>
+        <main class="content--interests">
+            <div class="content--interests_inner">
+                <h1 class="content--interests_title">ანგარიში აქტიურია, <span class="bold-green">{{ test_name }}</span>!</h1>
+                <h3 class="content--interests_subtitle">
+                    იმისთვის, რომ უკეთ შევუსაბამოთ ვაკანსიები თქვენს ინტერესებს და გაგიადვილოთ სამსახურის პოვნა,
+                    გთხოვთ აირჩიოთ <span class="bold-green">3 ინტერესის სფერო</span>
+                </h3>
+                <section class="content--interests_fields">
+                    {% if error %}
+                        <p class="error">{{ error }}</p>
+                    {% endif %}
+                    <form method="post" class="content--interests_fields-form">
+                        {% csrf_token %}
+                        <div class="content--interests_grid">
+                            {% for interest in interests %}
+                                <label class="content--interests_grid-option">
+                                    <input type="checkbox" name="interests" value="{{ interest.id }}">
+                                    <img src="{% static interest.icon_path %}" alt="{{ interest.name }} icon" class="interest-icon">
+                                    <span class="content--interests-grid-option-text">{{ interest.name }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn content--interests-btn">გაგრძელება</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const options = document.querySelectorAll('.content--interests_grid-option');
+  const interestsBtn = document.querySelector('.content--interests-btn');
+  const maxSelected = 3;
+
+  const updateButtonState = () => {
+    const selectedCount = document.querySelectorAll('.content--interests_grid-option.selected').length;
+    interestsBtn.disabled = selectedCount !== maxSelected;
+  };
+
+  options.forEach(option => {
+    const checkbox = option.querySelector('input[type="checkbox"]');
+
+    option.addEventListener('click', (e) => {
+      const isSelected = option.classList.contains('selected');
+
+      if (isSelected) {
+        option.classList.remove('selected');
+        checkbox.checked = false;
+      } else {
+        const selectedCount = document.querySelectorAll('.content--interests_grid-option.selected').length;
+        if (selectedCount < maxSelected) {
+          option.classList.add('selected');
+          checkbox.checked = true;
+        }
+      }
+
+      updateButtonState(); // always check after any click
+    });
+  });
+
+  // Initial state
+  updateButtonState();
+});
+</script>
+
 </body>
 </html>

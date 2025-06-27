@@ -46,6 +46,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class Interest(models.Model):
     name = models.CharField(max_length=100)
+    icon_path = models.CharField(max_length=100, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.icon_path:
+            # transliterate or use a predefined mapping
+            name_map = {
+                "პროგრამირება": "images/icons/programming-icon.svg",
+                "UI/UX დიზაინი": "images/icons/designer-icon.svg",
+                "ქსელები": "images/icons/network-icon.svg",
+                "გაყიდვები": "images/icons/sales-icon.svg",
+                "მარკეტინგი": "images/icons/marketing-icon.svg",
+                "არქიტექტურა": "images/icons/architecture-icon.svg",
+            }
+            self.icon_path = name_map.get(self.name, "icons/default.png")
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

@@ -103,30 +103,19 @@ def activate_account(request, uidb64, token):
     else:
         return render(request, 'core/registration/verify_failed.html')
 
-def account_view(request):
-    if not request.user.is_authenticated:
-        return redirect('authorization')
-
-    user = request.user
-    return render(request, 'core/account.html', {'user': user})
-
-def logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-    return redirect('authorization')
-
 
 def interests_view(request):
     # if not request.user.is_authenticated:
     #     return redirect('authorization')
-
+    # if hasattr(request.user, 'interests') and request.user.interests.exists():
+    #     return redirect('account')
     if request.method == 'POST':
         selected = request.POST.getlist('interests')
         if len(selected) == 3:
             request.user.interests.set(selected)
             return redirect('home')
         else:
-            error = "Please select exactly 3 interests."
+            error = "გთხოვთ აირჩიოთ ზუსტად 3 ინტერესის სფერო."
     else:
         error = None
 
@@ -136,3 +125,19 @@ def interests_view(request):
         'interests': interests,
         'error': error
     })
+
+def account_view(request):
+    if not request.user.is_authenticated:
+        return redirect('authorization')
+
+    user = request.user
+    interests = user.interests.all() if hasattr(user, 'interests') else None
+    return render(request, 'core/account.html', {
+        'user': user,
+        'interests': interests,
+    })
+
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+    return redirect('authorization')

@@ -74,7 +74,7 @@
         {% endif %}
       {% endif %}
 
-      <button type="submit" class="auth_form-button">
+      <button type="submit" class="btn auth_form-btn">
         {% if form_type == "register" %}რეგისტრაცია{% else %}შესვლა{% endif %}
       </button>
     </form>
@@ -82,7 +82,7 @@
     <form method="get" class="auth_form-switch">
       <input type="hidden" name="form_type" value="{% if form_type == 'register' %}login{% else %}register{% endif %}">
       <p>{% if form_type == 'register' %}უკვე გაქვს ანგარიში?{% else %}არ გაქვს ანგარიში?{% endif %}</p>
-      <button class="auth_form-button--link" type="submit">
+      <button class="auth_form-btn--link" type="submit">
         {% if form_type == "register" %}შესვლა{% else %}რეგისტრაცია{% endif %}
       </button>
     </form>
