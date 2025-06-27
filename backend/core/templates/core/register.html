@@ -7,14 +7,19 @@
 {% block content %}
 <div class="auth">
   <div class="auth_content">
-    <h1 class="auth_content-title">ყველა განცხადება ერთ სივრცეში</h1>
-    <p class="auth_content-subtext">შესვლა ან რეგისტრაცია ერთ გვერდზე.</p>
+    <h1 class="auth_content-title">ყველა <br>განცხადება <br>ერთ სივრცეში</h1>
   </div>
 
   <div class="auth_form">
     <h2 class="auth_form-title">
       {% if form_type == "register" %}რეგისტრაცია{% else %}შესვლა{% endif %}
     </h2>
+
+    {% if email_sent %}
+      <div class="success-message">
+        გთხოვთ გადაამოწმოთ თქვენი ელ.ფოსტა და დაადასტუროთ ანგარიში.
+      </div>
+    {% endif %}
 
     <form method="post" class="form" id="auth-form">
       {% csrf_token %}
@@ -25,28 +30,28 @@
         <div class="auth_form-group">
           {{ register_form.name }}
           {% for error in register_form.name.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
           {{ register_form.email }}
           {% for error in register_form.email.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
           {{ register_form.password1 }}
           {% for error in register_form.password1.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
           {{ register_form.password2 }}
           {% for error in register_form.password2.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
@@ -54,19 +59,19 @@
         <div class="auth_form-group">
           {{ login_form.username }}
           {% for error in login_form.username.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
           {{ login_form.password }}
           {% for error in login_form.password.errors %}
-            <div class="error">{{ error }}</div>
+            <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         {% if login_form.non_field_errors %}
-          <div class="error">
+          <div class="error-message">
             {% for error in login_form.non_field_errors %}
               {{ error }}
             {% endfor %}

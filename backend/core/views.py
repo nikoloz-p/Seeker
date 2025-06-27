@@ -44,6 +44,7 @@ def auth_view(request):
 
     if form_type == "register":
         register_form = CustomUserCreationForm(request.POST)
+
         if register_form.is_valid():
             user = register_form.save(commit=False)
             user.username = register_form.cleaned_data['email']
@@ -53,15 +54,25 @@ def auth_view(request):
             user.is_active = False
             user.save()
             send_verification_email(request, user)
-            return render(request, 'core/registration/verify_email_sent.html')
 
+            return render(request, 'core/register.html', {
+                'register_form': CustomUserCreationForm(),
+                'login_form': CustomLoginForm(),
+                'form_type': 'login',
+                'email_sent': True
+            })
 
-    elif form_type == 'login':  # login
+    elif form_type == 'login':
         login_form = CustomLoginForm(request, data=request.POST)
+
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            return redirect('home')  # or wherever you want
+
+            if not hasattr(user, 'interests') or user.interests.count() == 0:
+                return redirect('interests')
+
+        return redirect('home')
 
     return render(request, 'core/register.html', {
         "register_form": register_form,
@@ -89,6 +100,7 @@ def send_verification_email(request, user):
         fail_silently=False,
     )
 
+
 def activate_account(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
@@ -99,16 +111,19 @@ def activate_account(request, uidb64, token):
     if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'core/interests.html')
+        login(request, user)  # 🔥 log the user in
+        return redirect('interests')  # 🔥 use redirect, not render
     else:
         return render(request, 'core/registration/verify_failed.html')
 
 
 def interests_view(request):
-    # if not request.user.is_authenticated:
-    #     return redirect('authorization')
-    # if hasattr(request.user, 'interests') and request.user.interests.exists():
-    #     return redirect('account')
+
+    if not request.user.is_authenticated:
+        return redirect('authorization')
+    if hasattr(request.user, 'interests') and request.user.interests.exists():
+        return redirect('account')
+
     if request.method == 'POST':
         selected = request.POST.getlist('interests')
         if len(selected) == 3:
@@ -120,11 +135,14 @@ def interests_view(request):
         error = None
 
     interests = Interest.objects.all()
+    user = request.user
+
     return render(request, 'core/interests.html', {
-        'test_name': 'ნიკოლოზ',
+        'name': user.name,
         'interests': interests,
         'error': error
     })
+
 
 def account_view(request):
     if not request.user.is_authenticated:

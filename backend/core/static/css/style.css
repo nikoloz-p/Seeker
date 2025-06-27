@@ -58,8 +58,20 @@ h1, h2, h3, h4 {
 /*base styles*/
 
 .bold-green {
-    color: #116669;
+    color: #008abd;
     font-family: Contractica-CAPS;
+}
+
+.error-message {
+    text-align: left;
+    font-weight: bold;
+    color: red;
+}
+
+.success-message {
+    text-align: left;
+    font-weight: bold;
+    color: #008abd
 }
 
 /*header*/
@@ -151,13 +163,18 @@ h1, h2, h3, h4 {
 }
 
 .auth_content {
-    max-width: 600px;
     color: #fff;
 }
 
 .auth_content-title {
     font-family: 'Contractica-CAPS';
-    font-size: 68px;
+    font-size: 72px;
+    line-height: 90px;
+
+}
+
+.auth_content-subtext {
+    font-size: 21px;
 }
 
 .auth_form {
@@ -224,11 +241,7 @@ h1, h2, h3, h4 {
     border-color: #112669;
 }
 
-.error {
-    text-align: left;
-    font-weight: bold;
-    color: #116669;
-}
+
 
 .auth_form-switch {
     text-align: right;
@@ -237,48 +250,69 @@ h1, h2, h3, h4 {
 /*interests*/
 
 .body--interests {
-    height: calc(100vh - 25px);
-    background-color: #fff;
+    height: 100vh;
+    background-image: url("../images/2saturated.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 }
 
 /*header*/
 
 .header--interests{
-    margin-top: 25px;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    max-width: 456px;
+    background: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
 }
 
 .logo--interests {
-    text-align: center;
     display: block;
+    max-width: 300px;
+    margin: 0 auto 100px;
 }
 
-.logo--interests img{
-    max-width: 350px;
+.header--interests_inner {
+    width: 100%;
+}
+
+.arrow-dec {
+    position: absolute;
+    top: calc(50% - 150px);
+    right: -173px;
+    display: block;
+    width: 300px;
+    height: 300px;
+    z-index: -1;
 }
 
 /*content*/
 
 .content--interests {
-    margin-top: 50px;
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 228px);
+    transform: translate(-50%, -50%);
     text-align: center;
-}
-
-.content--interests_inner {
-    max-width: 900px;
-    margin: 0 auto;
+    width: 1000px;
 }
 
 .content--interests_title {
     font-family: Contractica-CAPS;
+    font-size: 35px;
 }
 
 .content--interests_subtitle {
-    margin-top: 35px;
+    margin-top: 25px;
     line-height: 35px;
-}
-
-.content--interests_fields {
-    margin-top: 30px;
 }
 
 .content--interests_fields-form {
@@ -289,27 +323,28 @@ h1, h2, h3, h4 {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
+    justify-content: space-around;
 }
 
 .content--interests_grid-option {
     display: flex;
-    flex: 0 0 calc(33.33% - 13.33px);
-    border: 3px solid #ddd;
-    box-sizing: border-box;
-    background: #fff;
-    height: 200px;
+    width: 300px;
+    height: 300px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    border: 5px solid transparent;
+    box-sizing: border-box;
+    background: #fff;
     cursor: pointer;
     user-select: none;
-    font-size: 1.2em;
+    font-size: 21px;
     text-align: center;
     padding: 10px;
     transition: border-color 0.2s, background-color 0.2s;
     position: relative;
-    border-radius: 15px;
+    border-radius: 25px;
     font-family: Contractica-CAPS;
 }
 
@@ -327,24 +362,25 @@ h1, h2, h3, h4 {
 }
 
 .content--interests_grid-option:hover {
-    border: 3px solid rgba(50, 77, 165, 0.59);
+    border: 10px solid rgba(50, 77, 165, 0.59);
 }
 
 .content--interests_grid-option.selected{
-    border: 3px solid rgba(50, 77, 165, 1);
+    border: 10px solid #008abd;
 }
 
 .interest-icon {
-    width: 70px;
-    height: 70px;
+    width: 100%;
+    opacity: 0.1;
     position: absolute;
     bottom: 0;
     right: 0;
+
 }
 
 .btn {
     padding: 0 25px;
-    background-color: #112669;
+    background-color: #008abd;
     color: #fff;
     font-family: 'Contractica-CAPS';
     font-size: 20px;
@@ -354,12 +390,14 @@ h1, h2, h3, h4 {
     height: 55px;
     line-height: 55px;
     vertical-align: middle;
-    border: solid #112669 2px;
+    border: solid #008abd 2px;
 }
 
 .content--interests-btn {
     margin-top: 50px;
     transition: all 0.3s ease;
+    position: absolute;
+    right: 0;
 }
 
 .content--interests-btn:disabled {
@@ -380,6 +418,6 @@ footer {
 
 a:hover {
     transition: all 0.3s ease;
-    color: #112669;
+    color: #008abd;
 }
 
