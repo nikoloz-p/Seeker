@@ -5,7 +5,7 @@ def insert_jobs_to_db(json_filename, table_name, log_callback=print):
     with open(f'{json_filename}', 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    conn = sqlite3.connect("jobs.db")
+    conn = sqlite3.connect("main.db")
     cursor = conn.cursor()
 
     cursor.execute(f'''
