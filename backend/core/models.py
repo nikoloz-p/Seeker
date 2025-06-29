@@ -50,7 +50,7 @@ class Interest(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.icon_path:
-            # transliterate or use a predefined mapping
+            
             name_map = {
                 "პროგრამირება": "images/icons/programming-icon.svg",
                 "UI/UX დიზაინი": "images/icons/designer-icon.svg",

@@ -1,16 +1,17 @@
+from django.forms.utils import ErrorList
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login
+from .forms import CustomUserCreationForm, CustomLoginForm
+from .models import Job, Interest
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from django.contrib.auth import logout
-from .forms import CustomUserCreationForm, CustomLoginForm
-from .models import Job, Interest
-from django.forms.utils import ErrorList
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -27,58 +28,67 @@ def job_detail(request, job_id):
     return render(request, 'core/job_detail.html', {'job': job})
 
 def auth_view(request):
-    if request.method == 'GET':
-        form_type = request.GET.get('form_type', 'login')
+    form_type = request.GET.get('form_type', 'login') if request.method == 'GET' else request.POST.get('form_type', 'register')
+    user = request.user
+    register_form = CustomUserCreationForm()
+    login_form = CustomLoginForm()
+
+    if request.method == 'POST':
+        
+        if form_type == "register":
+            register_form = CustomUserCreationForm(request.POST)
+            if register_form.is_valid():
+                user = register_form.save(commit=False)
+                user.username = register_form.cleaned_data['email']
+                user.email = register_form.cleaned_data['email']
+                user.first_name = register_form.cleaned_data['name']
+                user.set_password(register_form.cleaned_data['password1'])
+                user.is_active = False
+                user.save()
+                send_verification_email(request, user)
+                
+                messages.success(request, "გთხოვთ გადაამოწმოთ თქვენი ელ.ფოსტა და დაადასტუროთ ანგარიში.")
+                return redirect('/authorization?form_type=login')
+            else:
+                request.session['register_errors'] = register_form.errors.get_json_data()
+
+        elif form_type == 'login':
+            login_form = CustomLoginForm(request, data=request.POST)
+            if login_form.is_valid():
+                user = login_form.get_user()
+                login(request, user)
+                if not hasattr(user, 'interests') or user.interests.count() == 0:
+                    return redirect('interests')
+                return redirect('home')
+            else:
+                request.session['login_errors'] = login_form.errors.get_json_data()
+
+        return redirect(f'/authorization?form_type={form_type}')
+
+    if form_type == "register":
         register_form = CustomUserCreationForm()
+        if 'register_errors' in request.session:
+            errors = request.session.pop('register_errors')
+            for field, field_errors in errors.items():
+                register_form.errors.setdefault(field, ErrorList()).extend([e['message'] for e in field_errors])
+    else:
         login_form = CustomLoginForm()
+        if 'login_errors' in request.session:
+            errors = request.session.pop('login_errors')
+            for field, field_errors in errors.items():
+                login_form.errors.setdefault(field, ErrorList()).extend([e['message'] for e in field_errors])
+
+    if user.is_authenticated:
+        if not hasattr(user, 'interests') or user.interests.count() == 0:
+            return redirect('interests')
+        else:
+            return redirect('home')
+    else:
         return render(request, 'core/register.html', {
             'register_form': register_form,
             'login_form': login_form,
             'form_type': form_type,
         })
-
-    form_type = request.POST.get('form_type', 'register')
-
-    register_form = CustomUserCreationForm()
-    login_form = CustomLoginForm(request, data=request.POST)
-
-    if form_type == "register":
-        register_form = CustomUserCreationForm(request.POST)
-
-        if register_form.is_valid():
-            user = register_form.save(commit=False)
-            user.username = register_form.cleaned_data['email']
-            user.email = register_form.cleaned_data['email']
-            user.first_name = register_form.cleaned_data['name']
-            user.set_password(register_form.cleaned_data['password1'])
-            user.is_active = False
-            user.save()
-            send_verification_email(request, user)
-
-            return render(request, 'core/register.html', {
-                'register_form': CustomUserCreationForm(),
-                'login_form': CustomLoginForm(),
-                'form_type': 'login',
-                'email_sent': True
-            })
-
-    elif form_type == 'login':
-        login_form = CustomLoginForm(request, data=request.POST)
-
-        if login_form.is_valid():
-            user = login_form.get_user()
-            login(request, user)
-
-            if not hasattr(user, 'interests') or user.interests.count() == 0:
-                return redirect('interests')
-
-        return redirect('home')
-
-    return render(request, 'core/register.html', {
-        "register_form": register_form,
-        "login_form": login_form,
-        "form_type": form_type,
-    })
 
 def send_verification_email(request, user):
     token = default_token_generator.make_token(user)
@@ -111,8 +121,8 @@ def activate_account(request, uidb64, token):
     if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)  # 🔥 log the user in
-        return redirect('interests')  # 🔥 use redirect, not render
+        login(request, user)  
+        return redirect('interests')
     else:
         return render(request, 'core/registration/verify_failed.html')
 
@@ -121,6 +131,7 @@ def interests_view(request):
 
     if not request.user.is_authenticated:
         return redirect('authorization')
+    
     if hasattr(request.user, 'interests') and request.user.interests.exists():
         return redirect('account')
 

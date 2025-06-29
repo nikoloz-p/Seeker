@@ -15,10 +15,12 @@
       {% if form_type == "register" %}რეგისტრაცია{% else %}შესვლა{% endif %}
     </h2>
 
-    {% if email_sent %}
-      <div class="success-message">
-        გთხოვთ გადაამოწმოთ თქვენი ელ.ფოსტა და დაადასტუროთ ანგარიში.
-      </div>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="success-message">
+          {{ message }}
+        </div>
+      {% endfor %}
     {% endif %}
 
     <form method="post" class="form" id="auth-form">

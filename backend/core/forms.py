@@ -73,17 +73,30 @@ class CustomLoginForm(AuthenticationForm):
         password = self.cleaned_data.get('password')
 
         if email and password:
-            self.user_cache = authenticate(self.request, username=email, password=password)
+            try:
+                user = get_user_model().objects.get(email=email)
+            except get_user_model().DoesNotExist:
+                raise self.get_invalid_login_error()
 
-            if self.user_cache is None:
-                raise forms.ValidationError(
-                    "ელ-ფოსტა ან პაროლი არასწორია.", code='invalid_login'
-                )
+            if not user.check_password(password):
+                raise self.get_invalid_login_error()
 
-            if not self.user_cache.is_active:
+            if not user.is_active:
                 raise forms.ValidationError(
                     "თქვენი ანგარიში არ არის აქტიური. გთხოვთ, დაადასტუროთ ელ-ფოსტა.",
                     code='inactive',
                 )
 
+            self.confirm_login_allowed(user)
+            self.user_cache = user
+
         return self.cleaned_data
+
+    def get_user(self):
+        return self.user_cache
+
+    def get_invalid_login_error(self):
+        return forms.ValidationError(
+            "ელ-ფოსტა ან პაროლი არასწორია.",
+            code='invalid_login',
+        )

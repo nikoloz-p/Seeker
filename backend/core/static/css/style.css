@@ -46,9 +46,6 @@ a {
     text-decoration: none;
 }
 
-body {
-    background-color: #e3e3e3;
-}
 
 h1, h2, h3, h4 {
     margin: 0;
@@ -76,8 +73,8 @@ h1, h2, h3, h4 {
 
 /*header*/
 
-.header {
-    margin: 15px 0 30px;
+.header{
+    background-color: #fff;
 }
 
 .header_inner {
@@ -88,10 +85,14 @@ h1, h2, h3, h4 {
     justify-content: space-between;
     font-family: 'Contractica-Book';
     font-weight: 700;
-    padding: 30px 65px;
-    background-color: #fff;
-    border-radius: 40px;
+    padding: 25px 0;
 }
+
+.header_inner--centered {
+    justify-content: center;
+    margin: 0;
+    max-width: none;
+}    
 
 .header .logo {
     display: block;
@@ -153,8 +154,10 @@ h1, h2, h3, h4 {
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
-    height: calc(100vh - 147px);
+    height: calc(100vh - 91.66px);
 }
+
+
 
 .auth {
     display: flex;
