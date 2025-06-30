@@ -10,8 +10,25 @@ class Job(models.Model):
     end_date = models.CharField(null=True, blank=True)
 
     class Meta:
+        abstract = True
+
+# Table: hr_ge
+class HrGe(Job):
+    class Meta:
         managed = False
         db_table = 'hr_ge'
+
+# Table: jobs_ge
+class JobsGe(Job):
+    class Meta:
+        managed = False
+        db_table = 'jobs_ge'
+
+# Table: myjobs_ge
+class MyJobsGe(Job):
+    class Meta:
+        managed = False
+        db_table = 'myjobs_ge'
 
 
 class CustomUserManager(BaseUserManager):
@@ -35,6 +52,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
@@ -46,21 +65,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class Interest(models.Model):
     name = models.CharField(max_length=100)
-    icon_path = models.CharField(max_length=100, blank=True)
+    icon_name = models.CharField(max_length=100, blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.icon_path:
-            
+        if not self.icon_name:
             name_map = {
-                "პროგრამირება": "images/icons/programming-icon.svg",
-                "UI/UX დიზაინი": "images/icons/designer-icon.svg",
-                "ქსელები": "images/icons/network-icon.svg",
-                "გაყიდვები": "images/icons/sales-icon.svg",
-                "მარკეტინგი": "images/icons/marketing-icon.svg",
-                "არქიტექტურა": "images/icons/architecture-icon.svg",
+                "პროგრამირება": "terminal",
+                "UI/UX დიზაინი": "palette",
+                "ქსელები": "captive_portal",
+                "გაყიდვები": "real_estate_agent",
+                "მარკეტინგი": 'campaign',
+                "არქიტექტურა": "architecture",
             }
-            self.icon_path = name_map.get(self.name, "icons/default.png")
+            self.icon_name = name_map.get(self.name, "help_outline")
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+

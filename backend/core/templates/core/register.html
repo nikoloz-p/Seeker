@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block body_class %}class="auth-page"{% endblock %}
-{% block title %}Auth{% endblock %}
+{% block title %}ავტორიზაცია{% endblock %}
 {% block main_class %}auth-main{% endblock %}
 
 {% block content %}
@@ -30,6 +30,9 @@
 
       {% if form_type == "register" %}
         <div class="auth_form-group">
+          <span class="material-symbols-outlined">
+            person
+          </span>
           {{ register_form.name }}
           {% for error in register_form.name.errors %}
             <div class="error-message">{{ error }}</div>
@@ -37,6 +40,9 @@
         </div>
 
         <div class="auth_form-group">
+          <span class="material-symbols-outlined">
+            email
+          </span>
           {{ register_form.email }}
           {% for error in register_form.email.errors %}
             <div class="error-message">{{ error }}</div>
@@ -44,6 +50,9 @@
         </div>
 
         <div class="auth_form-group">
+            <span class="material-symbols-outlined">
+                lock
+            </span>
           {{ register_form.password1 }}
           {% for error in register_form.password1.errors %}
             <div class="error-message">{{ error }}</div>
@@ -51,6 +60,9 @@
         </div>
 
         <div class="auth_form-group">
+          <span class="material-symbols-outlined">
+            lock_reset
+          </span>
           {{ register_form.password2 }}
           {% for error in register_form.password2.errors %}
             <div class="error-message">{{ error }}</div>
@@ -59,6 +71,9 @@
 
       {% else %}
         <div class="auth_form-group">
+          <span class="material-symbols-outlined">
+            email
+          </span>
           {{ login_form.username }}
           {% for error in login_form.username.errors %}
             <div class="error-message">{{ error }}</div>
@@ -66,10 +81,13 @@
         </div>
 
         <div class="auth_form-group">
-          {{ login_form.password }}
-          {% for error in login_form.password.errors %}
-            <div class="error-message">{{ error }}</div>
-          {% endfor %}
+            <span class="material-symbols-outlined">
+                lock
+            </span>
+            {{ login_form.password }}
+            {% for error in login_form.password.errors %}
+              <div class="error-message">{{ error }}</div>
+            {% endfor %}
         </div>
 
         {% if login_form.non_field_errors %}

@@ -6,9 +6,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Seeker | {%block title%}  {% endblock %}</title>
+    <title>Seeker &#8226; {%block title%}  {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 </head>
 <body {% block body_class %}{% endblock %} >
     <!-- header -->
@@ -20,8 +21,18 @@
             {% if user.is_authenticated %}
                 <nav class="header_nav">
                     <ul class="nav_list">
-                        <li class="nav_list_item"><a href="{% url 'home' %}">განცხადებები</a></li>
-                        <li class="nav_list_item"><a href="{% url 'account' %}">პროფილი</a></li>
+                        <li class="nav_list_item">
+                            <a href="{% url 'home' %}">
+                                <span class="material-symbols-outlined">work_outline</span>
+                                <span class="nav_list_item-text">განცხადებები</span>
+                            </a>
+                        </li>
+                        <li class="nav_list_item">
+                            <a href="{% url 'account' %}">
+                                <span class="material-symbols-outlined">person</span>
+                                <span class="nav_list_item-text">პროფილი</span>
+                            </a>
+                        </li>
                     </ul>
             {% endif %}
             </nav>

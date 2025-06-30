@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate
+from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     username = None
@@ -100,3 +100,8 @@ class CustomLoginForm(AuthenticationForm):
             "ელ-ფოსტა ან პაროლი არასწორია.",
             code='invalid_login',
         )
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['profile_picture']

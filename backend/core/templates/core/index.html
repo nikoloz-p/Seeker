@@ -1,29 +1,23 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
-{% block title %} Jobs.ge Jobs {% endblock %}
+{% block title %} განცხადებები {% endblock %}
 
 {% block content %}
-
-    <ul class="job_list">
-
-        {% for job in jobs %}
-            <li class="job_list_item">
-                <a href="{{job.source_site}}">
-                    <img src="{{job.source_icon}}">
-                    {{ job.source_site }}
-                </a>
-                <a href="{{ job.position_url }}" target="_blank" class="job_list_item_position">{{ job.position }}</a>
-                <a href="{{ job.company_url}}" target="_blank" class="job_list_item_company">{{ job.company }}</a>
-                <span class="published_date">
-                    {{job.published_date}}
-                </span>
-                <span class="end_date">
-                    {{job.end_date}}
-                </span>
-            </li>
-
-        {% empty %}
-            <li>No jobs found.</li>
-        {% endfor %}
-    </ul>
+<ul class="job_list">
+    {% for job in jobs %}
+        <li class="job_list_item">
+            <a href="{{ job.source_site }}">
+                <img src="{% static job.source_icon %}" alt="{{ job.source_site }} logo">
+            </a>
+            <a href="{{ job.position_url }}" target="_blank" class="job_list_item_position">{{ job.position }}</a>
+            <a href="{{ job.company_url }}" target="_blank" class="job_list_item_company">{{ job.company }}</a>
+            <span class="published_date">{{ job.published_date }}</span>
+            <span class="end_date">{{ job.end_date }}</span>
+            <button class="btn">დეტალურად</button>
+        </li>
+    {% empty %}
+        <li>No jobs found.</li>
+    {% endfor %}
+</ul>
 {% endblock %}

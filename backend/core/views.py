@@ -1,8 +1,8 @@
 from django.forms.utils import ErrorList
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login
-from .forms import CustomUserCreationForm, CustomLoginForm
-from .models import Job, Interest
+from .forms import CustomUserCreationForm, CustomLoginForm, ProfileUpdateForm
+from .models import Job, Interest, HrGe, JobsGe, MyJobsGe
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
@@ -12,16 +12,41 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib import messages
+from urllib.parse import urlparse
+import random
+
 
 User = get_user_model()
 
 def job_list(request):
-    jobs = Job.objects.order_by('id')[:50]
+    hr_jobs = list(HrGe.objects.all())
+    jobs_ge = list(JobsGe.objects.all())
+    myjobs_ge = list(MyJobsGe.objects.all())
 
-    if not request.user.is_authenticated:
-        return redirect('authorization')
-    else:
-        return render(request, 'core/index.html', {'jobs': jobs})
+    icon_map = {
+        "hr.ge": "images/src_website_logos/hrge_logo.svg",
+        "jobs.ge": "images/src_website_logos/jobsge_logo.png",
+        "myjobs.ge": "images/src_website_logos/myjobsge_logo.svg",
+    }
+
+    all_jobs = hr_jobs + jobs_ge + myjobs_ge
+    random.shuffle(all_jobs)
+
+    for job in all_jobs:
+        domain = urlparse(job.position_url).netloc.lower()
+        if domain.startswith("www."):
+            domain = domain[4:]
+
+        source_site = domain
+        source_icon = icon_map.get(source_site, "images/src_website_logos/default_logo.svg")
+
+        setattr(job, 'source_site', source_site)
+        setattr(job, 'source_icon', source_icon)
+
+    random_jobs = all_jobs[:50]
+
+    return render(request, 'core/index.html', {'jobs': random_jobs})
+
 
 def job_detail(request, job_id):
     job = Job.objects.get(pk=job_id)
@@ -147,9 +172,10 @@ def interests_view(request):
 
     interests = Interest.objects.all()
     user = request.user
+    first_name = request.user.name.split(' ')[0]
 
     return render(request, 'core/interests.html', {
-        'name': user.name,
+        'name': first_name,
         'interests': interests,
         'error': error
     })
@@ -161,10 +187,20 @@ def account_view(request):
 
     user = request.user
     interests = user.interests.all() if hasattr(user, 'interests') else None
+
+    form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=user)
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('account')
+
     return render(request, 'core/account.html', {
         'user': user,
         'interests': interests,
+        'form': form,
     })
+
+
 
 def logout_view(request):
     if request.method == 'POST':

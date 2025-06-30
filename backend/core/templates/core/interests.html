@@ -32,7 +32,9 @@
                     {% for interest in interests %}
                         <label class="content--interests_grid-option">
                             <input type="checkbox" name="interests" value="{{ interest.id }}">
-                            <img src="{% static interest.icon_path %}" alt="{{ interest.name }} icon" class="interest-icon">
+                                <span class="material-symbols-outlined interest-icon">
+                                    {{ interest.icon_name }}
+                                </span>
                             <span class="content--interests-grid-option-text">{{ interest.name }}</span>
                         </label>
                     {% endfor %}
