@@ -46,6 +46,11 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: #008abd!important;
+    transition: all 0.3s ease;
+}
+
 
 h1, h2, h3, h4 {
     margin: 0;
@@ -500,6 +505,7 @@ content--interests-grid-option-text {
     display: block;
     margin: auto;
     border-radius: 50%;
+    background: #ebebeb59;
 }
 
 .profile-pic-change-icon {

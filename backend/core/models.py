@@ -52,8 +52,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
-
+    profile_picture = models.ImageField(
+        upload_to='profile_pics/', null=True, blank=True, verbose_name='Profile Pic'
+    )
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
@@ -76,6 +78,7 @@ class Interest(models.Model):
                 "გაყიდვები": "real_estate_agent",
                 "მარკეტინგი": 'campaign',
                 "არქიტექტურა": "architecture",
+                
             }
             self.icon_name = name_map.get(self.name, "help_outline")
         super().save(*args, **kwargs)
