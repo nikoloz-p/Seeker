@@ -19,6 +19,8 @@ import random
 User = get_user_model()
 
 def job_list(request):
+    user = request.user
+    
     hr_jobs = list(HrGe.objects.all())
     jobs_ge = list(JobsGe.objects.all())
     myjobs_ge = list(MyJobsGe.objects.all())
@@ -44,7 +46,9 @@ def job_list(request):
         setattr(job, 'source_icon', source_icon)
 
     random_jobs = all_jobs[:50]
-
+    if not user.is_authenticated:
+        return redirect('authorization')
+    
     return render(request, 'core/index.html', {'jobs': random_jobs})
 
 
