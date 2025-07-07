@@ -13,14 +13,38 @@ from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib import messages
 from urllib.parse import urlparse
+from django.db.models import Q
 import random
 
 
 User = get_user_model()
 
+# categories
+
+categories_map = {
+    'გაყიდვები': ['გაყიდვები', 'ბიზნესი', 'ბიზნეს', 'ფინანსისტი', 'ფინანსური', 'ფინანსები' 'მენეჯერი', 'კონსულტანტი'],
+    'UI/UX დიზაინი':  ['ui', 'ux', 'დიზაინერი', '3d'],
+    'პროგრამირება': ['python', 'პითონი', 'დეველოპერი', 'მონაცემთა', 'ბაზები', '.net', 'java'],
+    'არქიტექტურა': ['არქიტექტორი']
+    
+}
+
+def categorize_job(title):
+    text = (title or "").lower()
+    for category, keywords in categories_map.items():
+        if any(keyword.lower() in text for keyword in keywords):
+            return category
+    return "სხვა"
+
+
 def job_list(request):
     user = request.user
-    
+
+    if not user.is_authenticated:
+        return redirect('authorization')
+
+    query = request.GET.get('q', '').strip().lower()
+
     hr_jobs = list(HrGe.objects.all())
     jobs_ge = list(JobsGe.objects.all())
     myjobs_ge = list(MyJobsGe.objects.all())
@@ -34,20 +58,35 @@ def job_list(request):
     all_jobs = hr_jobs + jobs_ge + myjobs_ge
     random.shuffle(all_jobs)
 
+    user_interests = [i.name for i in user.interests.all()]
+    filtered_jobs = []
+
     for job in all_jobs:
         domain = urlparse(job.position_url).netloc.lower()
+        
         if domain.startswith("www."):
             domain = domain[4:]
-
-        source_site = domain
-        source_icon = icon_map.get(source_site, "images/src_website_logos/default_logo.svg")
-
+        
+        source_site = f'https://{domain}'
+        source_icon = icon_map.get(domain)
+        
         setattr(job, 'source_site', source_site)
         setattr(job, 'source_icon', source_icon)
 
-    random_jobs = all_jobs[:50]
-    if not user.is_authenticated:
-        return redirect('authorization')
+        title = getattr(job, 'title', '') or getattr(job, 'position', '')
+        category = categorize_job(title)
+        setattr(job, 'category', category)
+
+        if category in user_interests:
+            if query:
+                if query in title.lower():
+                    filtered_jobs.append(job)
+            else:
+                filtered_jobs.append(job)
+
+    random.shuffle(filtered_jobs)
+    random_jobs = filtered_jobs[:20]
+
     
     return render(request, 'core/index.html', {'jobs': random_jobs})
 

@@ -4,20 +4,35 @@
 {% block title %} განცხადებები {% endblock %}
 
 {% block content %}
+<form method="get" action="{% url 'home' %}" class="search-form">
+    <input type="text" name="q" placeholder="ძებნა..." value="{{ request.GET.q }}" class="search-form-input">
+    <button type="submit"  class="search-form-btn">
+        <span class="material-symbols-outlined">
+            search
+        </span>
+    </button>
+</form>
+
 <ul class="job_list">
+    <div class="job_list-inner">
     {% for job in jobs %}
         <li class="job_list_item">
-            <a href="{{ job.source_site }}">
+            <a href="{{ job.source_site }}" target="_blank">
                 <img src="{% static job.source_icon %}" alt="{{ job.source_site }} logo">
             </a>
             <a href="{{ job.position_url }}" target="_blank" class="job_list_item_position">{{ job.position }}</a>
             <a href="{{ job.company_url }}" target="_blank" class="job_list_item_company">{{ job.company }}</a>
             <span class="published_date">{{ job.published_date }}</span>
             <span class="end_date">{{ job.end_date }}</span>
-            <button class="btn">დეტალურად</button>
+            <span class="category">
+                {{job.category}}
+            </span>
+            <button type="button" class="btn job_list_item-btn">
+                დეტალურად
+            </button>
         </li>
     {% empty %}
-        <li>No jobs found.</li>
+        სამწუხაროდ, ამ ეტაპზე ასეთი ვაკანსია ვერ მოიძებნა.
     {% endfor %}
 </ul>
 {% endblock %}
