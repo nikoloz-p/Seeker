@@ -452,13 +452,20 @@ content--interests-grid-option-text {
 }
 
 
-/*profile*/
+/*account*/
+
+.account-page {
+    background: rgba(87, 87, 87, 0.3);
+}
 
 .profile-layout {
     display: flex;
     justify-content: space-between;
-    height: calc(100vh - 145px);
+    height: calc(100vh - 200px);
     margin-top: 30px;
+    background: #fff;
+    padding: 20px 50px;
+    border-radius: 20px;
 }
 
 .content_profile-info {
@@ -468,6 +475,8 @@ content--interests-grid-option-text {
     text-align: left;
     position: relative;
     height: 100%;
+    border-right: 2px solid #e0e0e0;
+    padding-right: 20px;
 }
 
 .content_profile-info_inner {
@@ -560,6 +569,33 @@ content--interests-grid-option-text {
 }
 
 
+.content--interests_grid--account {
+    flex-wrap: nowrap;
+    margin-top: 80px;
+    justify-content: space-around;
+}
+
+.content--interests_grid-option--account {
+    max-width: 200px!important;
+    height: 200px!important;
+    border: 5px solid #008abd;
+    cursor: default;
+}
+
+.content--interests_grid-option--account .interest-icon {
+    font-size: 95px!important;
+    color: #008abd;
+    opacity: 0.4;
+}
+
+.content--interests_grid-option--account:hover {
+    border: 5px solid #008abd;
+}
+
+.content--interests_grid-option--account:hover .interest-icon{
+    color: #008abd;
+    opacity: 0.4;
+}
 /* media queries */
 
 @media (max-width: 1024px) {

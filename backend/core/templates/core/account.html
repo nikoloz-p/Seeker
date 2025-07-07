@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static%}
-
+{% block body_class %}class="account-page"{% endblock %}
 {% block title %}პროფილი{% endblock %}
 
 {% block content %}
@@ -44,11 +44,18 @@
         </aside>
         <main class="content content--account">
             <h2 class="content--account_title">ინტერესები</h2>
-            {% for interest in interests %}
-            <ul>
-                <li>{{interest}}</li>
-            </ul>
-            {% endfor %}
+            <div class="content--interests_grid content--interests_grid--account">
+                {% for interest in interests %}
+                    <div class="content--interests_grid-option content--interests_grid-option--account">
+                        <span class="material-symbols-outlined interest-icon">
+                            {{ interest.icon_name }}
+                        </span>
+                        <span class="content--interests-grid-option-text">
+                            {{ interest.name }}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
         </main>
     </div>
     <script>
