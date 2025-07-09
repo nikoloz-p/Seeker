@@ -91,11 +91,12 @@ h1, h2, h3, h4 {
     justify-content: space-between;
     font-family: 'Contractica-Book';
     font-weight: 700;
-    padding: 25px 0;
+    padding: 25px;
 }
 
 .header_inner--centered {
-    justify-content: center;
+    display: block;
+    text-align: center;
     margin: 0;
     max-width: none;
 }    
@@ -109,9 +110,15 @@ h1, h2, h3, h4 {
     transform: translateY(7px);
 }
 
+.nav_list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 .nav_list_item {
     display: inline-block;
-    margin: 0 50px;
     font-size: 18px;
 }
 
@@ -179,46 +186,111 @@ h1, h2, h3, h4 {
     font-size: 22px!important;
 }
 
-
-.job_list {
-    margin-top: 50px;
-    border: solid #008bbd1c 3px;
-    border-radius: 20px;
-}
-
-.job_list_item {
+.jobs {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.job-row {
+    display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 50px;
-    border-bottom: solid #008bbd1c 3px;
+    border: solid rgba(0, 138, 189, 0.25) 2px;
+    border-top: none;
 }
 
-.job_list_item *{
-    text-align: center;
-    width: 200px;
+.job-row--jobs-inner {
+    display: flex;
+    align-items: center;
 }
 
-.job_list_item a{
-    width: 300px;
+.job-header {
+    font-family: 'Contractica-Book';
+    background: #008abd;
+    color: #fff;
+    border-radius: 20px 20px 0 0;
     font-weight: bold;
+    font-size: 18px;
+    padding: 15px 10px;
+}
+
+.job-col {
+    overflow-wrap: break-word;
+    text-align: left;
+    padding: 0 15px;
+}
+
+.job-col.job-col--jobs.position {
+    font-size: 17px;
+    font-family: 'Contractica-CAPS';
+}
+
+.job-col.site     { flex: 0 0 10%; min-width: 70px; }
+.job-col.position  { flex: 2.2; min-width: 120px; }
+.job-col.company   { flex: 1; min-width: 100px; }
+.job-col.published { flex: 1; min-width: 80px; }
+.job-col.end       { flex: 1; min-width: 80px;}
+.job-col.category  { flex: 1; min-width: 100px; }
+
+
+.job-row--jobs {
     color: #000;
+    height: 150px;
+}
+
+.job-row--jobs:last-child {
+    border-radius: 0 0 20px 20px;
+
+}
+
+.job-col--jobs.company, .job-col--jobs.category{
+    font-weight: bold;
+}
+
+.job-row--jobs:hover {
+    background: rgba(0, 138, 189, 0.1);
+}
+
+.job-col.site img {
+    width: 100px;
+    height: auto;
 }
 
 .job_list_item-btn {
-    font-size: 15px!important;
+    font-size: 12px!important;
     padding: 0 10px!important;
+    margin: 0 auto;
 }
 
-.job_list_item .category {
-    font-weight: bold;
-    border-bottom: solid #008abd 2px;
+.pagination {
+    margin: 50px 0 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.pagination .page-link {
+    margin: 0 10px;
+    color: #000;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
 
-.job_list_item_position{
-    text-align: left;
+}
+
+.pagination .current {
+    background: #008abd;
+    color: #fff;
+}
+
+.pagination .page-arrow {
+    color: #000;
 }
 
 /* authorization */
@@ -236,7 +308,7 @@ h1, h2, h3, h4 {
 .auth {
     display: flex;
     justify-content: space-between;
-    padding-top: 85px;
+    padding: 85px 40px;
 }
 
 .auth_content {
@@ -245,7 +317,7 @@ h1, h2, h3, h4 {
 
 .auth_content-title {
     font-family: 'Contractica-CAPS';
-    font-size: 72px;
+    font-size: 4em;
     line-height: 90px;
 
 }
@@ -259,6 +331,7 @@ h1, h2, h3, h4 {
     padding: 35px 50px;
     border-radius: 40px;
     text-align: center;
+    max-width: 500px;
 }
 
 .auth_form-title {
@@ -271,8 +344,14 @@ h1, h2, h3, h4 {
 .auth_form-group {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+}
+
+.auth_form-group-inner {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .auth_form-group .material-symbols-outlined {
@@ -344,6 +423,11 @@ h1, h2, h3, h4 {
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    overflow-x: hidden;
+}
+
+.body--interests header{
+    display: none;
 }
 
 /*header*/
@@ -399,17 +483,24 @@ h1, h2, h3, h4 {
     font-size: 35px;
 }
 
+.content--interests-top {
+    display: none;
+    color: #fff;
+}
+
 .content--interests_subtitle {
     margin-top: 25px;
     line-height: 35px;
 }
 
 .content--interests_fields-form {
-    text-align: right;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
 }
 
 .content--interests_grid {
-    width: 100%;
+    max-width: 1000px;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -421,7 +512,6 @@ h1, h2, h3, h4 {
     width: 300px;
     height: 300px;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     border: 5px solid transparent;
     box-sizing: border-box;
@@ -450,7 +540,7 @@ h1, h2, h3, h4 {
     z-index: 10;
 }
 
-content--interests-grid-option-text {
+.content--interests-grid-option-text {
     z-index: 10;
 }
 
@@ -502,8 +592,6 @@ content--interests-grid-option-text {
 .content--interests-btn {
     margin-top: 50px;
     transition: all 0.3s ease;
-    position: absolute;
-    right: 0;
 }
 
 .content--interests-btn:disabled {
@@ -518,56 +606,39 @@ content--interests-grid-option-text {
 /*account*/
 
 .account-page {
-    background: rgba(87, 87, 87, 0.3);
+    background: #008abd14
 }
 
-.profile-layout {
-    display: flex;
-    justify-content: space-between;
-    height: calc(100vh - 200px);
-    margin-top: 30px;
-    background: #fff;
-    padding: 20px 50px;
+.profile {
+    border: solid #7e7e7e 2px;
+    padding: 20px 80px;
     border-radius: 20px;
-}
-
-.content_profile-info {
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    position: relative;
-    height: 100%;
-    border-right: 2px solid #e0e0e0;
-    padding-right: 20px;
-}
-
-.content_profile-info_inner {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.22);
     background: #fff;
+    max-width: 900px;
+    margin: 20px auto;
 }
 
-.content_profile-info_inner-top {
+.profile-top {
+    margin-top: 40px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 50px;
 }
+
 
 .profile-pic-holder {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #008abd;
     position: relative;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    border: solid #008abd 3px;
 }
 
 .profile-pic-holder img {
@@ -577,7 +648,7 @@ content--interests-grid-option-text {
     display: block;
     margin: auto;
     border-radius: 50%;
-    background: #ebebeb59;
+    background: rgba(128, 128, 128, 0.75);
 }
 
 .profile-pic-change-icon {
@@ -595,146 +666,419 @@ content--interests-grid-option-text {
 }
 
 .profile-pic-holder:hover .profile-pic-change-icon{
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
-.content_profile-info .user-full-name {
+.profile-top .user-full-name {
     font-family: 'Contractica-CAPS';
     font-size: 35px;
-    margin: 55px 0 0;
+    margin: 35px 0 0;
     text-align: center;
+    text-transform: capitalize;
+    font-weight: normal;
+    color: #008abd;
 }
 
-.content_profile-info .user-email {
+.profile-top .user-email {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.profile-bottom-title {
+    font-size: 26px;
+    margin: 50px 0 30px;
+    color: #008abd;
+}
+
+.profile-bottom-interests {
     display: flex;
     align-items: center;
-    justify-content: left;
-    gap: 10px;
-    font-size: 23px;
 }
 
-.content_profile-info-btn {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+.profile-bottom-interests-option {
+    display: block;
+    margin: 0 15px;
+    padding: 20px;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.07);
+    border-radius: 35px;
+    font-size: 20px;
 }
 
-.content--account {
-    width: 100%;
-    text-align: center;
-
-}
-.content--account_title {
-    margin-top: 70px;
-    text-align: center;
-    font-family: 'Contractica-CAPS';
-    font-size: 45px;
+.profile-bottom-interests-option:first-child {
+    margin-left: 0;
 }
 
-
-.content--interests_grid--account {
-    flex-wrap: nowrap;
-    margin-top: 80px;
-    justify-content: space-around;
+.logout-form {
+    margin-top: 120px;
+    text-align: right;
 }
 
-.content--interests_grid-option--account {
-    max-width: 200px!important;
-    height: 200px!important;
-    border: 5px solid #008abd;
-    cursor: default;
-}
-
-.content--interests_grid-option--account .interest-icon {
-    font-size: 95px!important;
-    color: #008abd;
-    opacity: 0.4;
-}
-
-.content--interests_grid-option--account:hover {
-    border: 5px solid #008abd;
-}
-
-.content--interests_grid-option--account:hover .interest-icon{
-    color: #008abd;
-    opacity: 0.4;
-}
 /* media queries */
 
-@media (max-width: 1024px) {
-  .auth_form-input,
-  .auth_form-group {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+@media (max-width: 1700px) {
+    .header--interests {
+        max-width: 350px;
+    }
 
-  .auth_form-input {
-    margin-left: 0;
-  }
+    .header--interests .arrow-dec{
+        right: -145px;
+        width: 260px;
+        height: 260px;
+    }
+}
 
-  .nav_list_item {
-    margin: 0 20px;
-  }
+@media (max-width: 1499px) {
 
-  .content--interests {
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-  }
+    .content--interests {
+        left: calc(60%);
+    }
 
-  .content--interests_grid {
-    justify-content: center;
-  }
+    .content--interests_grid {
+        max-width: 900px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-around;
+    }
+
+    .content--interests_grid-option {
+        width: 250px;
+        height: 250px;
+    }
+
+    .interest-icon {
+        font-size: 120px!important
+    }
+
+    .content--interests-btn {
+        right: 10%;
+    }
+
+    .header--interests .arrow-dec{
+        display: none;
+    }
+}
+
+@media (max-width: 1350px){
+
+    .content--interests {
+        left: calc(55%);
+    }
+
+    .content--interests_grid {
+        max-width: 800px;
+    }
+
+    .header--interests {
+        max-width: 280px;
+    }
+
+    .logo--interests {
+        width: 250px;
+    }
+
+    .content--interests_grid-option {
+        width: 200px;
+        height: 200px;
+    }
+
+    .interest-icon {
+        font-size: 95px!important
+    }
+
+    .content--interests-btn {
+        right: 21%;
+    }
+
+}
+
+
+@media (max-width: 1120px) {
+    .auth {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .auth_content-title {
+        text-align: center;
+        font-size: 40px;
+        line-height: normal;
+        margin-bottom: 20px;
+    }
+
+    .job-header{
+        font-size: 14px;
+    }
+    
+
+    .body--interests::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: -2;
+    }
+
+    .header--interests {
+        display: none;
+    }
+
+    .content--interests-top {
+        display: block;
+        max-width: 500px;
+        margin: 25px auto;
+        font-size: 21px;
+    }
+
+
+    .body--interests header {
+        display: block;
+    }
+
+    .header_inner--centered img{
+        width: 150px;
+    }
+
+    .content--interests {
+        position: static;
+        transform: none;
+        margin: 40px auto;
+        max-width: 800px;
+    }
+
+    .content--interests_fields-form{
+        align-items: center;
+        margin-top: 55px;
+    }
+
+    .content--interests_grid-option {
+        width: 220px;
+        height: 220px;
+    }
+
+    .content--interests-btn {
+        align-self: end;
+    }
+
+}
+
+@media (max-width: 1000px) {
+
+    .nav_list_item {
+        margin: 10px 0;
+    }
+
+    .search-form {
+        width: 80%;
+    }
+
+    .search-form-input {
+        width: 100%;
+    }
+
+    .job_list_item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .job_list_item * {
+        width: auto;
+    }
+}
+
+@media (max-width: 970px) {
+    .job-col {
+        text-align: center
+    }
+
+    .job-col.position  {
+        flex: 2;
+    }
+
+    .profile {
+        max-width: 600px;
+    }
+
+    .profile-bottom {
+        text-align: center;
+    }
+
+    .profile-bottom-interests {
+        flex-direction: column;
+    }
+
+    .profile-bottom-interests-option {
+        margin: 15px 0 0 0;
+    }
+
+    .logout-form {
+        text-align: center;
+    }
+}
+
+@media (max-width: 866px) {
+    .job-header {
+        display: none;
+    }
+
+    .job-row {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        position: relative;
+        justify-content: center;
+    }
+
+    .jobs:nth-child(2) {
+        border-top: solid rgba(0, 138, 189, 0.25) 2px;
+    }
+
+    .job-col {
+        flex: 0!important;
+        margin-top: 20px;
+    }
+
+    .job-col.published,
+    .job-col.site,
+    .job-col.end {
+        order: -1;
+        display: inline-block;
+        text-align: center;
+        top: 0;
+        position: absolute;
+    }
+
+    .job-col.site {
+        left: 0;
+    }
+
+    .job-col.published, .job-col.end {
+        right: 0;
+    }
+
+    .job-col.published {
+        right: 80px;
+    }
+
+    .job-col.published:after {
+        content: '/';
+        padding: 5px;
+    }
+
+    .job-col.category {
+        margin-top: 50px;
+    }
+
+    .job-col.position {
+        margin-top: 55px;
+        color: #008abd;
+        padding: 0;
+    }
+
+    .job-col.published,
+    .job-col.end {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .job-col.site img {
+        width: 100px;
+        vertical-align: middle;
+    }
+
+    .body--interests {
+        height: 100%;
+    }
+
+    .content--interests_grid-option {
+        flex: 0 0 35%
+    }
+
+    .content--interests-btn {
+        align-self: center;
+    }
+
+}
+
+@media (max-width: 645px) {
+    .content--interests_grid {
+        gap: 25px;
+    }
+
+    .content--interests_grid-option {
+        flex: auto;
+    }
 }
 
 @media (max-width: 768px) {
-  .header_inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
-  .nav_list_item {
-    display: block;
-    margin: 10px 0;
-  }
+    .header_inner--centered {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .auth {
-    flex-direction: column;
-    align-items: center;
-  }
+    .nav_list_item {
+        display: block;
+        margin: 10px 0;
+    }
 
-  .auth_form {
-    width: 100%;
-    padding: 30px;
-  }
+    .auth {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .auth_form-input {
-    width: 100%;
-  }
+    .auth_form {
+        width: 100%;
+        padding: 30px;
+    }
 
-  .content--interests_grid-option {
-    width: 45%;
-    height: 200px;
-  }
+    .auth_form-input {
+        width: 100%;
+    }
 
-  .profile-layout {
-    flex-direction: column;
-    height: auto;
-  }
+    .profile-layout {
+        flex-direction: column;
+        height: auto;
+    }
 
-  .profile-pic-holder {
-    width: 200px;
-    height: 200px;
-  }
+    .profile-pic-holder {
+        width: 200px;
+        height: 200px;
+    }
 
-  .content_profile-info {
-    max-width: 100%;
-    margin: 0 auto;
-  }
+    .content_profile-info {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .content--interests {
+        width: 100%;
+    }
+
+    .content--interests-top {
+        font-size: 20px;
+    }
 }
 
-@media (max-width: 480px) {
+
+
+@media (max-width: 515px) {
+
+    .header_inner {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav_list {
+        margin-top: 20px;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 485px) {
   .auth_content-title {
     font-size: 42px;
     line-height: 60px;
@@ -776,4 +1120,6 @@ content--interests-grid-option-text {
   .content_profile-info .user-full-name {
     font-size: 28px;
   }
+
+
 }

@@ -12,6 +12,11 @@
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 </head>
 <body class="body--interests">
+    <header class="header">
+        <div class="header_inner header_inner--centered">
+            <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo">
+        </div>
+    </header>
     <aside class="header--interests">
         <img src="{% static 'images/logo1.svg' %}" alt="Seeker logo" class="logo--interests">
         <div class="header--interests_inner">
@@ -24,6 +29,13 @@
         <img class="arrow-dec" src="{% static 'images/icons/sam.svg' %}" alt="arrow decoration">
     </aside>
     <main class="content--interests">
+        <div class="content--interests-top">
+            <h1 class="content--interests_title">ანგარიში აქტიურია, <br><span class="bold-green">{{ name }}</span>!</h1>
+            <h3 class="content--interests_subtitle">
+                იმისთვის რომ უკეთ შევუსაბამოთ ვაკანსიები თქვენს ინტერესებს და გაგიადვილოთ სამსახურის პოვნა,
+                გთხოვთ აირჩიოთ <br><span class="bold-green">3 ინტერესის სფერო</span>
+            </h3>
+        </div>
         <section class="content--interests_fields">
             {% if error %}
                 <p class="error">{{ error }}</p>

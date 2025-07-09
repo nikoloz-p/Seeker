@@ -4,60 +4,46 @@
 {% block title %}პროფილი{% endblock %}
 
 {% block content %}
-    <div class="profile-layout">
-        <aside class="content_profile-info">
-            <div class="content_profile-info_inner">
-                <div class="content_profile-info_inner-top">
-                    <form method="post" enctype="multipart/form-data" id="profile-form">
-                        {% csrf_token %}
-
-                        <input type="file" name="profile_picture" id="file-input" accept="image/*" style="display: none;" onchange="document.getElementById('profile-form').submit();">
-
-                        {% if user.profile_picture %}
-                            <div class="profile-pic-holder">
-                                <img src="{{ user.profile_picture.url }}" alt="Profile picture" class="profile-pic">
-                                <span class="material-symbols-outlined profile-pic-change-icon">edit</span>
-                            </div>
-                        {% else %}
-                            <div class="profile-pic-holder">
-                                <img src="{% static 'images/icons/default_avatar.svg' %}" alt="Default profile" class="profile-pic">
-                                <span class="material-symbols-outlined profile-pic-change-icon">edit</span>
-                            </div>
-                        {% endif %}
-                    </form>
-                    <h1 class="user-full-name">{{user.name}}</h1>
-                </div>
-
-                <p class="user-email">
-                    <span class="material-symbols-outlined">
-                        email
-                    </span>
-                    <span class="user-email-text">
-                        {{user.email}}
-                    </span>
-                </p>
-            </div>
-            <form method="post" action="{% url 'logout' %}">
+    <div class="profile">
+        <div class="profile-top">
+            <form method="post" enctype="multipart/form-data" id="profile-form">
                 {% csrf_token %}
-                <button type="submit" class="btn content_profile-info-btn">გამოსვლა</button>
-            </form>
-        </aside>
-        <main class="content content--account">
-            <h2 class="content--account_title">ინტერესები</h2>
-            <div class="content--interests_grid content--interests_grid--account">
-                {% for interest in interests %}
-                    <div class="content--interests_grid-option content--interests_grid-option--account">
-                        <span class="material-symbols-outlined interest-icon">
-                            {{ interest.icon_name }}
-                        </span>
-                        <span class="content--interests-grid-option-text">
-                            {{ interest.name }}
-                        </span>
+                <input type="file" name="profile_picture" id="file-input" accept="image/*" style="display: none;" onchange="document.getElementById('profile-form').submit();">
+                {% if user.profile_picture %}
+                    <div class="profile-pic-holder">
+                        <img src="{{ user.profile_picture.url }}" alt="Profile picture" class="profile-pic">
+                        <span class="material-symbols-outlined profile-pic-change-icon">edit</span>
                     </div>
+                {% else %}
+                    <div class="profile-pic-holder">
+                        <img src="{% static 'images/icons/default_avatar.svg' %}" alt="Default profile" class="profile-pic">
+                        <span class="material-symbols-outlined profile-pic-change-icon">edit</span>
+                    </div>
+                {% endif %}
+            </form>
+            <h1 class="user-full-name">{{user.name}}</h1>
+            <p class="user-email">
+                <span class="user-email-text">
+                    {{user.email}}
+                </span>
+            </p>
+        </div>
+        <div class="profile-bottom">
+            <h2 class="profile-bottom-title">ინტერესები</h2>
+            <div class="profile-bottom-interests">
+                {% for interest in interests %}
+                    <span class="profile-bottom-interests-option">
+                        {{ interest.name }}
+                    </span>
                 {% endfor %}
             </div>
-        </main>
+        </div>
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="btn content_profile-info-btn">გამოსვლა</button>
+        </form>
     </div>
+
     <script>
     document.querySelector('.profile-pic-holder').addEventListener('click', function () {
         document.getElementById('file-input').click();

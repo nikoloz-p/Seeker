@@ -14,6 +14,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from urllib.parse import urlparse
 from django.db.models import Q
+from django.core.paginator import Paginator
 import random
 
 
@@ -36,7 +37,6 @@ def categorize_job(title):
             return category
     return "სხვა"
 
-
 def job_list(request):
     user = request.user
 
@@ -56,20 +56,19 @@ def job_list(request):
     }
 
     all_jobs = hr_jobs + jobs_ge + myjobs_ge
-    random.shuffle(all_jobs)
 
     user_interests = [i.name for i in user.interests.all()]
     filtered_jobs = []
 
     for job in all_jobs:
         domain = urlparse(job.position_url).netloc.lower()
-        
+
         if domain.startswith("www."):
             domain = domain[4:]
-        
+
         source_site = f'https://{domain}'
         source_icon = icon_map.get(domain)
-        
+
         setattr(job, 'source_site', source_site)
         setattr(job, 'source_icon', source_icon)
 
@@ -84,16 +83,24 @@ def job_list(request):
             else:
                 filtered_jobs.append(job)
 
-    random.shuffle(filtered_jobs)
-    random_jobs = filtered_jobs[:20]
+    dated = [job for job in filtered_jobs if job.published_date is not None]
+    undated = [job for job in filtered_jobs if job.published_date is None]
 
-    
-    return render(request, 'core/index.html', {'jobs': random_jobs})
+    dated.sort(key=lambda job: job.published_date, reverse=True)
+
+    filtered_jobs = dated + undated
+
+    paginator = Paginator(filtered_jobs, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'core/index.html', {
+        'jobs': page_obj.object_list,
+        'page_obj': page_obj,
+    })
 
 
-def job_detail(request, job_id):
-    job = Job.objects.get(pk=job_id)
-    return render(request, 'core/job_detail.html', {'job': job})
+
 
 def auth_view(request):
     form_type = request.GET.get('form_type', 'login') if request.method == 'GET' else request.POST.get('form_type', 'register')

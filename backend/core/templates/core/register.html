@@ -7,7 +7,7 @@
 {% block content %}
 <div class="auth">
   <div class="auth_content">
-    <h1 class="auth_content-title">ყველა <br>განცხადება <br>ერთ სივრცეში</h1>
+    <h1 class="auth_content-title">ყველა განცხადება ერთ სივრცეში</h1>
   </div>
 
   <div class="auth_form">
@@ -30,40 +30,49 @@
 
       {% if form_type == "register" %}
         <div class="auth_form-group">
+          <div class="auth_form-group-inner">
           <span class="material-symbols-outlined">
             person
           </span>
           {{ register_form.name }}
+          </div>
           {% for error in register_form.name.errors %}
             <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
-          <span class="material-symbols-outlined">
-            email
-          </span>
-          {{ register_form.email }}
+          <div class="auth_form-group-inner">
+            <span class="material-symbols-outlined">
+              email
+            </span>
+            {{ register_form.email }}
+          </div>
           {% for error in register_form.email.errors %}
             <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
-            <span class="material-symbols-outlined">
-                lock
-            </span>
-          {{ register_form.password1 }}
+            <div class="auth_form-group-inner">
+              <span class="material-symbols-outlined">
+                  lock
+              </span>
+            {{ register_form.password1 }}
+          </div>
+
           {% for error in register_form.password1.errors %}
             <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
-          <span class="material-symbols-outlined">
-            lock_reset
-          </span>
-          {{ register_form.password2 }}
+          <div class="auth_form-group-inner">
+            <span class="material-symbols-outlined">
+              lock_reset
+            </span>
+            {{ register_form.password2 }}
+          </div>
           {% for error in register_form.password2.errors %}
             <div class="error-message">{{ error }}</div>
           {% endfor %}
@@ -71,20 +80,24 @@
 
       {% else %}
         <div class="auth_form-group">
-          <span class="material-symbols-outlined">
-            email
-          </span>
-          {{ login_form.username }}
+          <div class="auth_form-group-inner">
+            <span class="material-symbols-outlined">
+              email
+            </span>
+            {{ login_form.username }}
+          </div>
           {% for error in login_form.username.errors %}
             <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div>
 
         <div class="auth_form-group">
-            <span class="material-symbols-outlined">
-                lock
-            </span>
-            {{ login_form.password }}
+            <div class="auth_form-group-inner">
+              <span class="material-symbols-outlined">
+                  lock
+              </span>
+              {{ login_form.password }}
+            </div>
             {% for error in login_form.password.errors %}
               <div class="error-message">{{ error }}</div>
             {% endfor %}

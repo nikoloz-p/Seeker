@@ -6,33 +6,71 @@
 {% block content %}
 <form method="get" action="{% url 'home' %}" class="search-form">
     <input type="text" name="q" placeholder="ძებნა..." value="{{ request.GET.q }}" class="search-form-input">
-    <button type="submit"  class="search-form-btn">
-        <span class="material-symbols-outlined">
-            search
-        </span>
+    <button type="submit" class="search-form-btn">
+        <span class="material-symbols-outlined">search</span>
     </button>
 </form>
 
-<ul class="job_list">
-    <div class="job_list-inner">
+<div class="jobs">
+    <!-- Header -->
+    <div class="job-row job-header">
+        <div class="job-col site">საიტი</div>
+        <div class="job-col position">პოზიცია</div>
+        <div class="job-col company">კომპანია</div>
+        <div class="job-col published"> გამოქვეყნდა</div>
+        <div class="job-col end">ბოლო ვადა</div>
+        <div class="job-col category">კატეგორია</div>
+    </div>
+
+    <!-- Job Rows -->
     {% for job in jobs %}
-        <li class="job_list_item">
-            <a href="{{ job.source_site }}" target="_blank">
-                <img src="{% static job.source_icon %}" alt="{{ job.source_site }} logo">
-            </a>
-            <a href="{{ job.position_url }}" target="_blank" class="job_list_item_position">{{ job.position }}</a>
-            <a href="{{ job.company_url }}" target="_blank" class="job_list_item_company">{{ job.company }}</a>
-            <span class="published_date">{{ job.published_date }}</span>
-            <span class="end_date">{{ job.end_date }}</span>
-            <span class="category">
-                {{job.category}}
-            </span>
-            <button type="button" class="btn job_list_item-btn">
-                დეტალურად
-            </button>
-        </li>
+    <a class="job-row job-row--jobs" href="{{job.position_url }}" target="_blank">
+        <div class="job-col job-col--jobs site">
+            <img src="{% static job.source_icon %}" alt="{{ job.source_site }} logo">
+        </div>
+        <div class="job-col job-col--jobs position">
+            <span>{{ job.position }}</span>
+        </div>
+        <div class="job-col job-col--jobs company">
+            <span>{{ job.company }}</span>
+        </div>
+        <div class="job-col job-col--jobs published">{{ job.published_date }}</div>
+        <div class="job-col job-col--jobs end">{{ job.end_date }}</div>
+        <div class="job-col job-col--jobs category">{{ job.category }}</div>
+    </a>
     {% empty %}
-        სამწუხაროდ, ამ ეტაპზე ასეთი ვაკანსია ვერ მოიძებნა.
+    <div class="job-row no-results">სამწუხაროდ, ამ ეტაპზე ასეთი ვაკანსია ვერ მოიძებნა.</div>
     {% endfor %}
-</ul>
+</div>
+
+<div class="pagination">
+
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="page-arrow">&lt;</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+
+    {% if num == page_obj.number %}
+      <span class="page-link current"><span>{{ num }}</span></span>
+
+    {% elif num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'1' %}
+      <a href="?page={{ num }}" class="page-link"><span>{{ num }}</span></a>
+
+    {% elif num == 1 or num == page_obj.paginator.num_pages %}
+      <a href="?page={{ num }}" class="page-link"><span>{{ num }}</span></a>
+
+    {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'2' %}
+      <span class="page-dots">...</span>
+
+    {% endif %}
+
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="page-arrow">&gt;</a>
+  {% endif %}
+
+</div>
+
 {% endblock %}
