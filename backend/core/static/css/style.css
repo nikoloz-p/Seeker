@@ -919,6 +919,12 @@ h1, h2, h3, h4 {
     }
 }
 
+@media (max-width: 843px) {
+    .auth-main {
+        height: 100%;
+    }
+}
+
 @media (max-width: 866px) {
     .job-header {
         display: none;
@@ -1000,6 +1006,8 @@ h1, h2, h3, h4 {
     .content--interests-btn {
         align-self: center;
     }
+
+
 
 }
 
